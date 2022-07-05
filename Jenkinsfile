@@ -5,8 +5,8 @@ pipeline {
   stages {
     stage('run collection') {
       steps {
-        sh 'docker run -t postman/newman run -h'
-        sh 'docker run -v ${WORKSPACE}:/etc/newman --workdir /etc/newman -t postman/newman run Collection.postman_collection.json --color off --disable-unicode'
+        git branch: 'develop', credentialsId: '995d58f6-eb07-41cc-ab62-4160537621a9', url: 'https://github.com/eapalacios57/Postman-Newman.git'
+        sh 'docker run --rm -v ${PWD}:/etc/newman -w /etc/newman -t postman/newman run Collection.postman_collection.json -e enviroment.json '
       }
     }
   }
