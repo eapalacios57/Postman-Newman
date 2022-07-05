@@ -1,0 +1,27 @@
+{
+	"id": "253d59e1-eb87-4826-b8bd-4ab6b7b1a909",
+	"name": "New Environment",
+	"values": [
+		{
+			"key": "ip_url",
+			"value": "10.1.0.184",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "port",
+			"value": "3082",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "context_path",
+			"value": "SimonQuotation/login.html",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2022-07-05T13:50:34.719Z",
+	"_postman_exported_using": "Postman/9.23.3"
+}
