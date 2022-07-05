@@ -24,32 +24,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip_url}}:{{port}}/{{Context_Path}}",
+					"raw": "http://{{ip_url}}:{{port}}/{{context_path}}",
 					"protocol": "http",
 					"host": [
 						"{{ip_url}}"
 					],
 					"port": "{{port}}",
 					"path": [
-						"{{Context_Path}}"
+						"{{context_path}}"
 					]
 				}
 			},
 			"response": []
-		}
-	],
-	"variable": [
-		{
-			"key": "ip_url",
-			"value": "10.1.0.184"
-		},
-		{
-			"key": "port",
-			"value": "3082"
-		},
-		{
-			"key": "Context_Path",
-			"value": "SimonQuotation/login.html"
 		}
 	]
 }
