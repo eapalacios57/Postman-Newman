@@ -1,16 +1,16 @@
-// pipeline {
-//     agent {
-//         label 'nodo-vm' 
-//     }
-//   stages {
-//     stage('run collection') {
-//       steps {
-//         sh 'docker run -t postman/newman run -h'
-//         sh 'docker run -v ${WORKSPACE}:/etc/newman --workdir /etc/newman -t postman/newman run Collection.postman_collection.json --color off --disable-unicode'
-//       }
-//     }
-//   }
-// }
+pipeline {
+    agent {
+        label 'nodo-vm' 
+    }
+  stages {
+    stage('run collection') {
+      steps {
+        git branch: '${BRANCH_NAME}', credentialsId: '995d58f6-eb07-41cc-ab62-4160537621a9', url: 'https://github.com/eapalacios57/Postman-Newman.git'
+        sh 'docker run --rm -v ${PWD}:/etc/newman -w /etc/newman -t postman/newman run Collection.postman_collection.json -e enviroment.json --color off --disable-unicode'
+      }
+    }
+  }
+}
 // node {
 //     try {
 //         notifyBuild('STARTED')
@@ -69,43 +69,4 @@
 //   slackSend (color: colorCode, message: summary)
 // }
 
-def notifications(String buildStatus = "STARTED"){
-    def JENKINS_FILE = readJSON(text: readFile("./Jenkinsfile.json").trim());
-    def channelName = JENKINS_FILE['channelName']
-    def msg = "${buildStatus}: `${env.JOB_NAME}` #${env.BUILD_NUMBER}:\n${env.BUILD_URL}"
-    slackSend(channel:channelName, color: '##FFFF00', message: msg)
-}
-notifications()
 
-pipeline {
-  
-  agent any
-  stages {
-    stage("Deploy Config"){
-      steps {
-          notifications()
-          sh '''#!/bin/bash
-       
-            your bash code here
-
-        '''   
-      }
-    }
-  }
-  
-  post { 
-    success { 
-      slackSend color: "#54EC4F", message: """Jenkins DONE deploying Config to
-      branch: [${env.BRANCH}]
-      build# ${env.BUILD_NUMBER}
-      """
-    }
-
-    failure { 
-      slackSend color: "#FF0000", message: """Jenkins ERROR deploying Config to
-      branch: [${env.BRANCH}]
-      build# ${env.BUILD_NUMBER}
-      """
-    }
-  }
-}
