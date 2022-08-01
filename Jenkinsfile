@@ -3,7 +3,7 @@ pipeline {
         label 'nodo-vm' 
     }
     triggers{
-        cron(env.BRANCH_NAME.equals("stage") ? '55 11 * * 1' : env.BRANCH_NAME.equals("master") ? '00 12 * * 1': '')
+        cron(env.BRANCH_NAME.equals("stage") ? '40 14 * * 1' : env.BRANCH_NAME.equals("master") ? '45 14 * * 1': '')
     }
   stages {
     stage('Smoke Test') {
