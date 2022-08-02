@@ -19,6 +19,7 @@ pipeline {
              }
       }
     }
+    }
     stage('Smoke Test') {
       when { anyOf {  branch 'develop'; tag "v*-release"; tag "v*" } }
       steps {
@@ -29,3 +30,4 @@ pipeline {
     }
   }
 }
+
