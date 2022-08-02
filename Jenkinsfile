@@ -1,3 +1,4 @@
+def branchEnv = ''
 pipeline {
     agent {
         label 'nodo-vm' 
@@ -18,6 +19,7 @@ pipeline {
                   branchEnv = 'master'
              }
       }
+      sh 'echo $PWD'
     }
     }
     stage('Smoke Test') {
