@@ -19,7 +19,7 @@ pipeline {
                   branchEnv = 'master'
              }
       }
-      sh 'echo $PWD'
+      sh 'echo $branchEnv'
     }
     }
     stage('Smoke Test') {
