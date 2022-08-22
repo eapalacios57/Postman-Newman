@@ -1,66 +1,32 @@
-def branchEnv = ''
 pipeline {
-    agent {
-        label 'master' 
+   agent any
+    environment {
+      WEBLOGIC_CREDENTIAL = credentials('6277405c-0a82-4023-bcfe-0b545ba9bccb')
     }
-    // triggers{
-    //     cron(env.BRANCH_NAME.equals("stage") ? '40 14 * * 1' : env.BRANCH_NAME.equals("master") ? '00 14 * * 1': '')
-    // }
-  stages {
-    stage('Pruebas'){
-      when { anyOf { branch 'master';} }
-      steps{
-        sh 'pwd'
-        sh 'uname -a'
-        sh 'ls -la'
-        stash includes: "Jenkinsfile.weblogic", name: 'files'
+   stages {
+      stage('Generate File') {
+         steps {
+          echo '¡¡¡Hello World!!!'
+          //  script {
+          //   wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: WEBLOGIC_CREDENTIAL_PSW]]]) {
+          //     withEnv (["WEBLOGIC_CREDENTIAL_PSW=${WEBLOGIC_CREDENTIAL_PSW}"]){
+          //   //  wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: '$WEBLOGIC_CREDENTIAL_PSW']]]) {
+          //    def remote = [:]
+          //    remote.name = 'test'
+          //    remote.host = '192.168.100.158'
+          //    remote.user = 'birc'
+          //    remote.port = 22
+          //    remote.password = 's1st3m4s'
+          //    remote.allowAnyHosts = true
+          //    sshCommand remote: remote, command: 'docker ps '
+          //   //  logFileFilter{
+          //    sshCommand remote: remote, command: "docker exec e913beeca931 bash -c 'cd /u01/oracle/user_projects/domains/base_domain/bin && . ./setDomainEnv.sh ENV && java weblogic.Deployer -adminurl t3://192.168.100.158:9002 -username '$WEBLOGIC_CREDENTIAL_USR' -password '$WEBLOGIC_CREDENTIAL_PSW' -stop'"
+          //   //  }
+          //   //  }
+          //    }
+          //   }
+          //  }
+         } 
       }
-    }
-    // stage ('S3 upload Artefactory') {
-    //     when { anyOf { branch 'develop'; tag "v*-release"; tag "v*"} } 
-    //     steps {
-    //         script {
-    //         branchEnv = BRANCH_NAME
-    //            if(BRANCH_NAME ==~ /^v\d*\.\d*\.\d*\.\d*-release$/){
-    //                 branchEnv = 'stage'
-    //            }
-    //            if(BRANCH_NAME ==~ /^v\d*\.\d*\.\d*\.\d*/){
-    //                 branchEnv = 'master'
-    //            }    
-    //         }
-    //             sh 'ls -la'
-    //             sh 'pwd'
-    //             sh 'echo ${branchEnv}'
-    //             withAWS(region:'us-east-1', credentials:'e07e68a1-4303-4114-9fd2-1fe23fedfea2'){
-    //               //Opcion Uno
-    //               aws s3 cp jenkinsfile s3://testbucketsimon-jenkins/simon/
-    //               //Opcion Dos
-    //               s3Upload(file:"Jenkinsfile.bk", bucket:"testbucketsimon-jenkins", path:"simon/", pathStyleAccessEnabled: true,)
-    //       }
-    //     }
-
-    // }
- stage('Smoke Test') {
-   steps {
-       sh 'hostname'
-       unstash 'files'
-        }
-    post{
-        always{
-            sh 'hostname'
-            node('Linux'){
-                script{
-                  if(BRANCH_NAME == 'master'){
-                    sh 'docker ps'
-                    unstash 'files'
-                    sh 'mv Jenkinsfile.weblogic JenkinsTest'
-                    sh 'ls -la'
-                  }
-                }
-            }
-        }
-      }
-    }
-  }
+   }
 }
-

@@ -1,0 +1,8 @@
+on: push
+name: Main Workflow
+jobs:
+  SonarQubeTriggers:
+    name: SonarQube
+    runs-on: ubuntu-lastest
+    steps:
+      
